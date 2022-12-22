@@ -3,7 +3,7 @@ const Post = require('../models/post')
 const fetchPosts = async (req, res) => {
     const posts = await Post.find()
 
-    res.json({ post: posts })
+    res.json({ posts: posts })
 
 }
 

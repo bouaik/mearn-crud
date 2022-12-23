@@ -1,5 +1,8 @@
 import React from "react";
 import postsStore from "../store/postsStore";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+
 const UpdateForm = () => {
   const store = postsStore();
   return (
@@ -9,19 +12,28 @@ const UpdateForm = () => {
         <div>
           <h2>update note</h2>
           <form onSubmit={store.updatePost}>
-            <input
+            <TextField
+              id="outlined-basic"
+              label="Title"
+              variant="outlined"
               value={store.updateForm.title}
               name="title"
-              placeholder="title"
               onChange={store.handleUpdateFieldChange}
             />
-            <textarea
+
+            <TextField
+              id="outlined-multiline-static"
+              label="Body"
+              multiline
+              rows={4}
               value={store.updateForm.body}
               name="body"
-              placeholder="body"
               onChange={store.handleUpdateFieldChange}
             />
-            <input type="submit" />
+
+            <Button type="submit" variant="contained">
+              Update
+            </Button>
           </form>
         </div>
       )}

@@ -5,25 +5,13 @@ import Signup from "../pages/Signup";
 import NotesPages from "../pages/NotesPages";
 import RequireAuth from "./RequireAuth";
 import Logout from "../pages/Logout";
+import Header from "../pages/Header";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/signup">Signup</Link>
-          </li>
-          <li>
-            <Link to="/logout">Logout</Link>
-          </li>
-        </ul>
+        <Header />
         <Routes>
           <Route
             index

@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import authStore from "../store/authStore";
+import Box from "@mui/material/Box";
+import LinearProgress from "@mui/material/LinearProgress";
 
 const RequireAuth = (props) => {
   const store = authStore();
@@ -11,7 +13,12 @@ const RequireAuth = (props) => {
     }
   }, []);
 
-  if (store.loggedIn === null) return <div>Loading...</div>;
+  if (store.loggedIn === null)
+    return (
+      <Box sx={{ width: "100%" }}>
+        <LinearProgress />
+      </Box>
+    );
 
   if (store.loggedIn === false) return <Navigate to="/login" />;
 

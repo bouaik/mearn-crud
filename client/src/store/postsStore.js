@@ -2,15 +2,21 @@ import create from "zustand";
 import axios from "axios";
 
 const postsStore = create((set) => ({
+  isLoading: false,
   posts: null,
   createForm: { title: "", body: "" },
   updateForm: { title: "", body: "", _id: null },
 
   fetchPosts: async () => {
+    set({
+      isLoading: true,
+    });
+
     const res = await axios.get("/posts");
-    // st the state
+    // set the state
     set({
       posts: res.data.posts,
+      isLoading: false,
     });
   },
 

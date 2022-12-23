@@ -7,7 +7,7 @@ const postsStore = create((set) => ({
   updateForm: { title: "", body: "", _id: null },
 
   fetchPosts: async () => {
-    const res = await axios.get("http://localhost:3000/posts");
+    const res = await axios.get("/posts");
     // st the state
     set({
       posts: res.data.posts,
@@ -31,7 +31,7 @@ const postsStore = create((set) => ({
 
     const { createForm, posts } = postsStore.getState();
 
-    const res = await axios.post("http://localhost:3000/posts", createForm);
+    const res = await axios.post("/posts", createForm);
 
     set({
       posts: [...posts, res.data.post],
@@ -40,7 +40,7 @@ const postsStore = create((set) => ({
   },
 
   deletePost: async (_id) => {
-    await axios.delete(`http://localhost:3000/posts/${_id}`);
+    await axios.delete(`/posts/${_id}`);
     const { posts } = postsStore.getState();
 
     const newPosts = posts.filter((post) => post._id !== _id);
@@ -79,7 +79,7 @@ const postsStore = create((set) => ({
       posts,
     } = postsStore.getState();
 
-    const res = await axios.put(`http://localhost:3000/posts/${_id}`, {
+    const res = await axios.put(`/posts/${_id}`, {
       title,
       body,
     });

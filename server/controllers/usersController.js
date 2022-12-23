@@ -21,7 +21,7 @@ async function login(req, res) {
 
     const user = await User.findOne({ email });
 
-    if (!user) return sendStatus(401);
+    if (!user) return res.sendStatus(401);
 
     const passwordMatch = bcrypt.compareSync(password, user.password);
 
@@ -40,7 +40,6 @@ async function login(req, res) {
 
     res.sendStatus(200);
   } catch (err) {
-    console.log(err);
     res.sendStatus(400);
   }
 }

@@ -26,19 +26,19 @@ app.post("/signup", usersController.signup);
 
 app.post("/login", usersController.login);
 
+app.get("/logout", usersController.logout);
+
 app.get("/check-auth", requireAuth, usersController.checkAuth);
 
-app.post("/logout", usersController.logout);
+app.get("/posts", requireAuth, postController.fetchPosts);
 
-app.get("/posts", postController.fetchPosts);
+app.post("/posts", requireAuth, postController.createPost);
 
-app.post("/posts", postController.createPost);
+app.get("/posts/:id", requireAuth, postController.fetchPost);
 
-app.get("/posts/:id", postController.fetchPost);
+app.put("/posts/:id", requireAuth, postController.updatePost);
 
-app.put("/posts/:id", postController.updatePost);
-
-app.delete("/posts/:id", postController.deletePost);
+app.delete("/posts/:id", requireAuth, postController.deletePost);
 
 // start server
 app.listen(process.env.PORT);

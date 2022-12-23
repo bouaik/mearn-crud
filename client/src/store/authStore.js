@@ -2,6 +2,7 @@ import create from "zustand";
 import axios from "axios";
 
 const authStore = create((set) => ({
+  isError: false,
   loggedIn: null,
   loginForm: {
     email: "",
@@ -29,14 +30,18 @@ const authStore = create((set) => ({
   login: async () => {
     const { loginForm } = authStore.getState();
 
-    await axios.post("/login", loginForm);
-    set({
-      loggedIn: true,
-      loginForm: {
-        email: "",
-        password: "",
-      },
-    });
+    await axios
+      .post("/login", loginForm)
+      .then((res) => {
+        set({
+          loggedIn: true,
+          loginForm: {
+            email: "",
+            password: "",
+          },
+        });
+      })
+      .catch((err) => set({ isError: true }));
   },
 
   checkAuth: async () => {

@@ -4,7 +4,7 @@ import axios from "axios";
 import "./index.css";
 import App from "./components/App";
 
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "http://localhost:4000";
 axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

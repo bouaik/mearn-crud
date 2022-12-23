@@ -1,41 +1,44 @@
-// import dependencies 
-const express = require("express")
-const cors = require("cors")
-const connectToDb = require('./config/database')
-const postController = require("./controllers/postController")
-
-
+// import dependencies
+const express = require("express");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const connectToDb = require("./config/database");
+const postController = require("./controllers/postController");
+const usersController = require("./controllers/usersController");
+const requireAuth = require("./middleware/requireAuth");
 
 // Load env variables
 if (process.env.NODE_ENV != "production") {
-    require('dotenv').config()
+  require("dotenv").config();
 }
 
 // Connect to database
-connectToDb()
+connectToDb();
 
-
-const app = express()
+const app = express();
 // Configure express app
-app.use(express.json())
-app.use(cors())
-
+app.use(express.json());
+app.use(cors({ origin: true, credentials: true }));
+app.use(cookieParser());
 
 // Routing
-app.get("/posts", postController.fetchPosts)
+app.post("/signup", usersController.signup);
 
-app.post("/posts", postController.createPost)
+app.post("/login", usersController.login);
 
+app.get("/check-auth", requireAuth, usersController.checkAuth);
 
-app.get("/posts/:id", postController.fetchPost)
+app.post("/logout", usersController.logout);
 
+app.get("/posts", postController.fetchPosts);
 
-app.put("/posts/:id", postController.updatePost)
+app.post("/posts", postController.createPost);
 
+app.get("/posts/:id", postController.fetchPost);
 
-app.delete("/posts/:id", postController.deletePost)
+app.put("/posts/:id", postController.updatePost);
 
-
+app.delete("/posts/:id", postController.deletePost);
 
 // start server
-app.listen(process.env.PORT)
+app.listen(process.env.PORT);

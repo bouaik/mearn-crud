@@ -1,46 +1,64 @@
-const Post = require('../models/post')
+const Post = require("../models/post");
 
 const fetchPosts = async (req, res) => {
-    const posts = await Post.find()
+  try {
+    const posts = await Post.find({ user: req.user._id });
 
-    res.json({ posts: posts })
-
-}
-
+    res.json({ posts: posts });
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(400);
+  }
+};
 
 const createPost = async (req, res) => {
-    const { title, body } = req.body
+  try {
+    const { title, body } = req.body;
 
-    const post = await Post.create({ title, body })
-    res.json({ post: post })
-
-}
+    const post = await Post.create({ title, body, user: req.user._id });
+    res.json({ post: post });
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(400);
+  }
+};
 
 const fetchPost = async (req, res) => {
-    const { id } = req.params
-    const post = await Post.findById(id)
+  try {
+    const { id } = req.params;
+    const post = await Post.findOne({ _id: id, user: req.user._id });
 
-    res.json({ post: post })
-
-}
+    res.json({ post: post });
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(400);
+  }
+};
 
 const updatePost = async (req, res) => {
-    const { title, body } = req.body
+  try {
+    const { title, body } = req.body;
 
-    const { id } = req.params
-    await Post.findByIdAndUpdate(id, { title, body })
-    const post = await Post.findById(id)
-    res.json({ post: post })
-
-}
-
+    const { id } = req.params;
+    await Post.findByIdAndUpdate(id, { title, body });
+    const post = await Post.findOne({ _id: id, user: req.user._id });
+    res.json({ post: post });
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(400);
+  }
+};
 
 const deletePost = async (req, res) => {
-    const { id } = req.params
-    await Post.deleteOne({ id })
+  try {
+    const { id } = req.params;
+    await Post.deleteOne({ _id: id, user: req.user._id });
 
-    res.json({ message: "Deleted successfuly" })
+    res.json({ message: "Deleted successfuly" });
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(400);
+  }
+};
 
-}
-
-module.exports = { fetchPosts, createPost, fetchPost, updatePost, deletePost }
+module.exports = { fetchPosts, createPost, fetchPost, updatePost, deletePost };

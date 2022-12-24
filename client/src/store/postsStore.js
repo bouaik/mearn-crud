@@ -86,11 +86,11 @@ const postsStore = create((set) => ({
         body,
         _id,
       },
+      isModalOpen: true,
     });
   },
 
-  updatePost: async (e) => {
-    e.preventDefault();
+  updatePost: async () => {
     const {
       updateForm: { title, body, _id },
       posts,

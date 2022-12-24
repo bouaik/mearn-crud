@@ -7,7 +7,6 @@ const UpdateForm = () => {
   const store = postsStore();
   return (
     <>
-      {" "}
       {store.updateForm._id && (
         <div>
           <h2>update note</h2>

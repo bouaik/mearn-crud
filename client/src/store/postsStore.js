@@ -2,10 +2,23 @@ import create from "zustand";
 import axios from "axios";
 
 const postsStore = create((set) => ({
+  isModalOpen: false,
   isLoading: false,
   posts: null,
   createForm: { title: "", body: "" },
   updateForm: { title: "", body: "", _id: null },
+
+  handleOpen: () => {
+    set({
+      isModalOpen: true,
+    });
+  },
+
+  handleClose: () => {
+    set({
+      isModalOpen: false,
+    });
+  },
 
   fetchPosts: async () => {
     set({
@@ -32,9 +45,7 @@ const postsStore = create((set) => ({
     });
   },
 
-  createPost: async (e) => {
-    e.preventDefault();
-
+  createPost: async () => {
     const { createForm, posts } = postsStore.getState();
 
     const res = await axios.post("/posts", createForm);

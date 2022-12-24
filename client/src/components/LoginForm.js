@@ -1,5 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import authStore from "../store/authStore";
+import styled from "@emotion/styled";
+
+const InputSubmit = styled.input`
+  padding: 10px;
+  background-color: hotpink;
+  border-radius: 4px;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    color: white;
+  }
+`;
 
 const LoginForm = () => {
   const store = authStore();
@@ -31,7 +44,7 @@ const LoginForm = () => {
           placeholder="Password"
           onChange={store.updateLoginForm}
         />
-        <input type="submit" />
+        <InputSubmit type="submit" />
       </form>
     </>
   );
